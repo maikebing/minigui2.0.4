@@ -1,0 +1,375 @@
+名称
+
+    MiniGUI - 面向实时嵌入式系统的小型跨操作系统图形用户界面支持系统
+
+
+目录
+    1. 介绍
+    2. 什么是 MiniGUI-Processes
+    3. 本版本的主要变化
+    4. 在 Linux 上安装 MiniGUI
+    5. Linux 上的安装及配置示例
+    6. 开发历史
+    7. 有关作者
+    8. 如果遇到问题
+    9. 版权信息
+
+
+1. 介绍
+    
+    MiniGUI 是一个跨跨操作系统的图形用户界面支持系统. 由北京飞漫软件技术有限
+    公司开发.
+
+    MiniGUI 的目标是提供一个稳定的, 轻量级的跨操作系统图形用户界面支持系统, 
+    尤其适合基于 Linux/uClinux, eCos, uC/OS-II, VxWorks, ThreadX, Nucleus, OSE 
+    等的实时嵌入式系统.
+
+    MiniGUI 为应用程序定义了一组轻量级的窗口和图形设备接口. 利用这些接口, 每个
+    应用程序可以建立多个窗口, 而且可以在这些窗口中绘制图形, 且互不影响. 用户也
+    可以利用 MiniGUI 建立菜单, 按钮, 列表框等常见的 GUI 元素.
+
+    MiniGUI 由三个函数库组成: libminigui, libmgext 以及 libvcongui. libminigui 
+    是提供窗口管理和图形接口的核心函数库, 也提供了大量的标准控件; libmgext 是 
+    libminigui 的一个扩展库, 提供了一些有用的控件, 同时提供了一些方便而且有用
+    的用户界面函数, 比如 "文件打开" 对话框和 "颜色选取" 对话框; libvcongui 则
+    提供了一个应用程序可用的虚拟控制台窗口, 从而可以方便地在 MiniGUI 环境中运
+    行 UNIX 的字符界面应用程序.
+
+    用户可以将 MiniGUI 配置成 "MiniGUI-Threads" 或者 " MiniGUI-Processes". 运行
+    在 MiniGUI-Threads 上的程序可以在不同的线程中建立多个窗口, 但所有的窗口在
+    一个进程中运行. 相反, 运行在 MiniGUI-Processes 上的每个程序是单独的进程, 
+    每个进程可以建立多个窗口. MiniGUI-Threads 适合于具有单一功能的实时系统, 
+    而 MiniGUI-Processes 则适合于基于 Linux 等 UNIX 类操作系统的复杂嵌入式系统.
+
+    用户还可将 MiniGUI 编译成单进程的版本, 该版本下的应用程序可单独执行, 
+    而不需首先运行 mginit 程序. 
+
+    MiniGUI 的最新稳定版是版本 2.0.4/1.6.10;  您可以在我们的主页上找到最新的
+    MiniGUI 相关信息，或者下载遵循 GPL 授权条款发布的 MiniGUI 版本:
+    
+    http://www.minigui.org
+
+    2002 年 9 月, 由 MiniGUI 的主要开发者创立的北京飞漫软件技术有限公司成立,
+    MiniGUI 的开发主持和维护工作从松散组织转向商业机构. 相关信息可从如下站点
+    获得:
+
+    http://www.minigui.com
+    http://www.fmsoft.cn
+
+
+2. 什么是 MiniGUI-Processes
+
+    简单来说, MiniGUI-Processes 是 MiniGUI-Lite 的后续增强版本. 它是 MiniGUI
+    具有完整特性的多进程版本, 用来支持 Linux 等具有进程支持的嵌入式操作系统.
+    
+    最初的 MiniGUI 基于 POSIX 兼容的线程库, 而这种体系结构非常适合大多数传统的
+    嵌入式操作系统, 比如 eCos, uC/OS-II 以及 VxWorks 等. 但是, 如果我们使用嵌
+    入式 Linux, 则类似 X Window 那样的体系结构将带来更好的稳定性及伸缩性, 因为
+    每个进程的地址空间都是独立的, 而且可以使用诸如共享库这样的机制.
+
+    现在, 用户可以使用 MiniGUI-Processes 以 Linux 进程的形式一次运行多个 
+    MiniGUI 程序.  MiniGUI-Processes 是原先 MiniGUI 的多进程版本. 用户可以从一
+    个称为 "mginit" 的程序中运行其它基于 MiniGUI-Processes 的程序. 和 X Window
+    类似, "mginit" 程序称为服务器, 而其它程序称为客户.
+
+    客户通过 UNIX 域套接字连接到服务器, 而服务器接受来自客户的请求. 服务器为客
+    户提供共享资源, 管理窗口对象, 并向顶层客户发送鼠标和键盘事件. 如果某个客户
+    由于某个原因正常或者非正常终止, 服务器和其他进程并不会受到影响, 而可以继续
+    正常运行.
+
+    在我们发布的源代码当中, 有一个软件包称为 "MDE". 在这个软件包中,有一个 
+    "mginit" 程序可创建一个虚拟控制台窗口. 你可以从该控制台的命令行启动其它程序,
+    甚至可以利用 "gdb" 调试这些程序.
+
+    用户可以在一个基于 MiniGUI-Processes 的程序中创建多个窗口, 但不能启动新线程
+    创建窗口. 因此, 原先 MiniGUI 中的某些函数不能再使用了, 但大多数的 
+    MiniGUI-Processes API 和原先的 MiniGUI 版本是兼容的. 为了明确区分, 我们将
+    基于 PThread 的 MiniGUI 称为 "MiniGUI-Threads".
+
+    MiniGUI 的源代码默认配置为 MiniGUI-Threads. 在运行 "./configure" 配置 
+    MiniGUI 时, 你可以使用如下命令禁止 MiniGUI-Threads, 而编译成 
+    MiniGUI-Processes 模式:
+
+    $ ./configure --enable-procs
+
+    那么, MiniGUI-Processes 和 MiniGUI-Lite 之间有什么区别呢?
+
+    MiniGUI-Lite 客户程序建立的窗口对象并不是全局对象, 也就是说, 客户程序不知
+    道由其他客户建立的窗口对象, 从而无法实现进程间窗口对象的互相剪切. 但是, 
+    MiniGUI-Processes 所建立的主窗口, 菜单等对象均是全局对象, 从而所有窗口间都
+    可以实现互相的剪切. 这就是 MiniGUI-Lite 和 MiniGUI-Threads 的本质区别.
+
+    在编程接口上, 我们保留了 MiniGUI-Lite 中的一些概念, 比如层以及请求/应答机制
+    等等. 而一些接口因为不再适合 MiniGUI-Processes, 从而被修改或者被删除. 但
+    主要的影响在服务器端, 对客户程序的影响非常小 (只有初始化的接口发生了变化).
+    对 API 的主要修改, 请参阅产品光盘中的 "RELEASE.NOTES" 文档.
+
+
+3. 本版本的主要变化
+
+    相对版本 2.0.3/1.6.0, 版本 2.0.4/1.6.10 的主要变化有:
+
+    * 字体和字符集支持的增强.
+       * UTF-16 编码支持;
+       * FreeType2 库的支持, 并提供了基于 subpixel 技术的字体平滑;
+       * 增强了本地字符集和 UNICODE 之间的转换接口，并提供了 UNICODE 到
+         GBK 和 BIG5 字符集的转换码表.
+
+    * TextEdit 和 ListBox 控件的增强.
+
+    * 其他增强特性, 包括:
+      * 定时器处理机制的增强.
+      * 优化 DrawText 函数;
+      * 动态装载 TrueType 和 QPF 字体;
+      * 优化 ScrollWindow 函数;
+      * 增加 SaveDC/RestoreDC 函数.
+
+    更详细的说明, 请参阅 ChangeLog 文件以及产品光盘中的 ReleaseNotes-2.0.4.pdf
+    文件.
+
+    相对更早的版本, 版本 2.0.3/1.6.9 的主要变化有:
+
+    * 针对 Linux 操作系统的 MiniGUI-Processes 运行模式. (V2.0.3)
+
+    * 支持副屏.
+
+    * 增强的 BITMAP 操作接口, 比如用于旋转的 RotateBitmap 函数族.
+
+    * 老的 GAL 和 GDI 接口已经废弃.
+
+    更详细的说明, 请参阅产品光盘的 ReleaseNotes-2.0.3.pdf 文件.
+
+
+4. 在 Linux 上安装 MiniGUI
+
+  4.1 安装前的准备
+
+    1) 选择图形引擎
+
+    如果您的 Linux 内核支持 FrameBuffer, 则可以使用内建于 MiniGUI 的图形引擎
+    -- 即 "私有 fbcon 引擎". 这样, 就没有必要安装下面提到的其它图形函数库作
+    为 MiniGUI 的图形引擎了. 
+
+    Fbcon 引擎既可以支持 MiniGUI-Threads, 也可以支持 MiniGUI-Processes. 需要
+    注意的是, fbcon 引擎目前还不能提供对 "fbvga16" (标准 VGA 16 色模式)
+    的良好支持. 而且需要注意 fbcon 引擎只能运行在 Linux FrameBuffer 之上. 
+
+    对于 MiniGUI 应用开发者来讲, 另外一个可选的图形引擎是 QVFB. QVFB 是
+    运行在 X Window 上的一个虚拟 FrameBuffer 程序. 利用它, 我们可以在
+    X Window 上运行和调试 MiniGUI 程序.
+
+    2) 安装引擎
+
+    如果您决定使用 fbcon 图形引擎, 则没有必要预先安装某个特定的图形库.  
+    Fbcon 引擎已经内建于 MiniGUI 当中.
+
+    如果要使用 QVFB 作为图形引擎, 则需要安装 "qvfb-1.1" 软件包. 请从产品
+    CD-ROM 的 dep-libs/ 目录中获得这个软件包并安装.
+
+    3) 获得 MiniGUI
+
+    在安装好图形引擎之后, 请从我们的产品 CD-ROM 上获取如下 tar.gz 软件包并解开:
+
+        * libminigui-2.0.x.tar.gz: MiniGUI 函数库源代码, 其中包括
+          libminigui, libmywins, libmgext, 和 libvcongui.
+
+        * minigui-res-2.0.tar.gz: MiniGUI 所使用的资源, 包括基本字体, 图标, 
+          位图和鼠标光标.
+
+        * mde-2.0.x.tar.gz: MiniGUI 的综合演示程序.
+
+        * mg-samples-2.0.x.tar.gz: MiniGUI 示例程序包.
+
+  4.2 安装 MiniGUI 的资源文件
+
+    我们首先要安装 MiniGUI 的资源文件. 请按照如下步骤:
+
+        1) 使用 "tar" 命令解开 "minigui-res-2.0.tar.gz". 可使用如下命令:
+
+           $ tar zxf minigui-res-2.0.tar.gz
+
+        2) 改变到新建目录中, 然后以超级用户身份运行 "make" 命令:
+
+           $ su -c make install
+
+  4.3 配置和编译 MiniGUI
+
+    MiniGUI 使用了 "automake" 和 "autoconf" 接口, 因而 MiniGUI 的配置和编译
+    非常容易:
+
+        1) 使用 "tar" 解开 "libminigui-2.0.x.tar.gz" 到新的目录:
+
+           $ tar zxf libminigui-2.0.x.tar.gz
+
+        2) 改变到新目录, 然后运行 "./configure":
+
+           $ ./configure
+
+        3) 运行下面的命令编译并安装 MiniGUI:
+
+           $ make; su -c 'make install';
+
+        4) 默认情况下, MiniGUI 的函数库将安装在 `/usr/local/lib' 目录中. 
+           您应该确保该目录已经列在 "/etc/ld.so.conf" 文件中. 并且在安装之后,
+           要运行下面的命令更新共享函数库系统的缓存:
+
+            $ su -c ldconfig
+
+        5) 如果要控制您的 MiniGUI 提供那些功能, 则可以运行:
+
+           $ ./configure --help
+
+           查看完整的配置选项清单, 然后通过命令行开关打开或者关闭某些功能. 例如, 
+           如果您不希望 MiniGUI 使用 LoadBitmap 函数装载 JPEG 图片, 则可以使用:
+
+           $ ./configure --disable-jpgsupport
+
+        6) 注意, 某些 MiniGUI 特色依赖于其它函数库, 请确保已安装了这些函数库.
+
+
+  4.4 运行 MiniGUI 的演示程序
+
+    "mde-2.0.x.tar.gz" 中包含了 MiniGUI 的综合演示程序. 
+
+    运行之前, 应该解开并编译 mde-2.0.x.tar.gz 包:
+
+        1) 使用 "tar" 命令将软件包解开到新的目录.
+
+        2) 依次运行 "./configure" 和 "make" 编译演示程序.
+
+        4) 如果配置并安装了 MiniGUI-Processes, 则应该首先运行服务器, 然后从服
+           务器程序当中运行其它演示程序.  编译 MDE 将生成一个 "mginit" 程序, 
+           该程序将提供一个运行于 MiniGUI-Processes 的虚拟控制台:
+
+           $ cd mginit
+           $ ./mginit
+
+        5) 如果将 MiniGUI 配置为 MiniGUI-Threads, 则可以直接进入某个
+          演示程序目录直接运行其中的程序, 比如:
+
+           $ cd same
+           $ ./same
+
+
+5. Linux 上的安装及配置示例
+
+   本示例假定用户使用的系统是 RedHat Linux 6.x 或以上发行版, 使用 Linux 内核
+   2.2.xx 或者 2.4.xx, 用户的目标是运行 MiniGUI-Threads (使用 MiniGUI 
+   Version 2.0.x). 步骤如下:
+
+   1) 确保您的 PC 机显示卡是 VESA 兼容的. 大多数显示卡是 VESA 兼容的, 然而某些
+      内嵌在主板上的显示卡可能不是 VESA 兼容的, 比如 Intel i810 系列. 如果显示
+      卡是 VESA 兼容的, 就可以使用 Linux 内核中的 VESA FrameBuffer 驱动程序了.
+
+   2) 确保您的 Linux 内核包含了 FrameBuffer 支持, 并包含了 VESA FrameBuffer 
+      驱动程序. RedHat Linux 6.x 发行版自带的内核中已经包含了该驱动程序. 如果
+      使用自己编译的内核, 请检查您的内核配置.
+
+   3) 修改 /etc/lilo.conf 文件, 在您所使用的内核选项段中, 添加如下一行:
+
+                vga=0x0317
+
+      这样, Linux 内核在启动时将把显示模式设置为 1024x768x16bpp 模式. 如果您的
+      显示器无法达到这种显示分辨率, 可考虑设置 vga=0x0314, 对应 800x600x16bpp 
+      模式.
+      
+      修改后的 /etc/lilo.conf 文件类似:
+
+                boot=/dev/hda
+                map=/boot/map
+                install=/boot/boot.b
+                prompt
+                timeout=50
+                linear
+                default=linux
+
+                image=/boot/vmlinuz-2.4.2
+                    vga=0x0317          ; 这一行设置显示模式.
+                    label=linux
+                    read-only
+                    root=/dev/hda6
+
+                other=/dev/hda1
+                    label=dos
+
+    4) 运行 lilo 命令, 使所作的修改生效, 并重新启动系统.
+
+    5) 如果一切正常, 将在 Linux 内核的引导过程中看到屏幕左上角出现可爱的 Linux
+       吉祥物 -- 企鹅, 并发现系统的显示模式发生变化.
+
+    6) 按照第 4 节所讲, 获得 libminigui-2.0.x.tar.gz, minigui-res-2.0.tar.gz, 
+       以及 mde-2.0.x.tar.gz 等软件包, 注意要安装正确的版本.
+
+    7) 以 root 用户身份安装 minigui-res-2.0.tar.gz.
+
+    8) 在某个目录下解开 libminigui-2.0.x.tar.gz, 并进入新建的 
+       libminigui-2.0.x 目录.
+
+       $ tar zxf libminigui-2.0.x.tar.gz
+       $ cd libminigui-2.0.x
+
+    9) 依次运行如下命令:
+
+       $ ./configure
+       $ make
+
+    10) 以 root 身份运行 make install 命令:
+
+       $ su -
+       # make install
+
+    11) 修改 /etc/ld.so.conf 文件, 将 /usr/local/lib 目录添加到该文件最后一行. 
+        修改后类似:
+
+                /usr/lib
+                /usr/X11R6/lib
+                /usr/i486-linux-libc5/lib
+                /usr/local/lib
+
+    12) 以 root 身份执行 ldconfig 命令:
+
+       # ldconfig
+
+    13) 在新目录中解开 mde-2.0.x.tar.gz, 并进入新建目录:
+
+       $ tar zxf mde-2.0.x.tar.gz
+       $ cd mde-2.0.x
+       
+    14) 依次运行如下命令:
+
+       $ ./configure
+       $ make
+
+    15) 进入 same 目录, 并执行 same 程序:
+
+       $ cd same
+       $ ./same
+
+    16) 如果一切正常, 这时可以看到一个虚拟控制台出现在屏幕上. 
+
+    17) 如何关闭这个窗口, 不需要在这里赘述了吧. :)
+
+
+6. 开发历史
+
+    见 README.
+
+
+7. 有关作者
+
+    见 README.
+
+
+8. 如果遇到问题
+
+    如果您要了解 MiniGUI 的技术特性, 可致信 consult@minigui.com.
+
+    如果您对 MiniGUI 商业产品及商业授权感兴趣, 可致信 sales@minigui.com.  
+
+
+9. 版权信息
+
+    版权所有 (C) 2002~2007, 北京飞漫软件技术有限公司
+
+    保留所有权利.
+

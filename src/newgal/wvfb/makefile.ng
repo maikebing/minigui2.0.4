@@ -1,0 +1,4 @@
+# Makefile defines for building the MiniGUI DLL with Microsoft VC
+
+include Makefile.am
+include ../../../rules.make

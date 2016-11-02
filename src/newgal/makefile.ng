@@ -1,0 +1,24 @@
+SRC_FILES=          \
+    RLEaccel.c      \
+    blit.c          \
+    blit_0.c        \
+    blit_1.c        \
+    blit_A.c        \
+    blit_N.c        \
+    gamma.c         \
+    pixels.c        \
+    surface.c       \
+    stretch.c       \
+    video.c         \
+    yuv.c           \
+    yuv_sw.c        \
+    yuv_mmx.c       \
+    newgal.c
+
+LIB_NAME=libnewgal
+
+INCLUDES=-I../../include -I../include
+
+TOP_DIR=../..
+include ../../rules.make
+

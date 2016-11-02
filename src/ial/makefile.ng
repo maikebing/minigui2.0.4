@@ -1,0 +1,17 @@
+SRC_FILES = \
+	ial.c \
+	auto.c \
+	dummy.c \
+	svpxx.c \
+	wvfbial.c \
+	winial.c \
+	comminput.c
+
+LIB_NAME=libial
+
+INCLUDES=-I../../include -I../include
+
+TOP_DIR=../..
+
+include ../../rules.make
+

@@ -1,0 +1,71 @@
+# Makefile for building the libmgext DLL with Microsoft Visual C++ 
+#     compiler and nmake
+# Use: nmake -f makefile.msvc
+
+TOPLIBALL = 1
+
+!if !defined(DLL)
+DLL=1
+!endif
+
+!if !defined(NEWGAL)
+NEWGAL=1
+!endif
+
+################################################################
+# specific defines
+
+COMM_DIRS=control mywins skin
+
+COMM_LDADD=				     \
+	control\libcontrol.lib   \
+	mywins\libmywins.lib     \
+	skin\libskin.lib
+
+#FIXME, *.obj is not so good, howto use .lib?
+COMM_LDOBJS=			\
+	control\*.obj       \
+	mywins\*.obj        \
+	skin\*.obj
+
+
+#INCLUDES = -FIbuild\msvc_recommended_pragmas.h -I.. -I..\include -I.\include -I.\include\control 
+#DEFINES = -DHAVE_CONFIG_H
+
+SUB_DIRS = $(COMM_DIRS) include
+SUB_LDADD = $(COMM_LDADD)
+SUB_LDOBJS = $(COMM_LDOBJS)
+
+################################################################
+# include mgext special defines
+!INCLUDE ..\build\Defs-mgext.win32
+
+# includes common defines
+!INCLUDE ..\build\Defs.win32
+!INCLUDE ..\build\makedefs.msvc
+
+################################################################
+# specific targets and commands
+
+all :: $(MGEXTLIB).dll
+
+$(MGEXTLIB).dll : $(SUB_LDADD)
+	$(CC) -LD $(CRUNTIME) -Fe$(MGEXTLIB).dll $(SUB_LDOBJS) ..\src\$(MINIGUILIB).lib $(PTHREAD_LIBS) kernel32.lib user32.lib $(LDFLAGS)
+
+install::
+!if $(DLL)
+	$(CP) $(MGEXTLIB).dll $(libdir)\$(MGEXTLIB).dll
+!endif
+	$(CP) $(MGEXTLIB).lib $(libdir)\$(MGEXTLIB).lib
+
+installdirs : force
+	-mkdir $(prefix)
+	-mkdir $(exec_prefix)
+	-mkdir $(libdir)
+
+uninstall : force
+!if $(DLL)
+	$(RM) $(libdir)\$(MGEXTLIB).dll
+!endif
+	$(RM) $(libdir)\$(MGEXTLIB).lib
+

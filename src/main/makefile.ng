@@ -1,0 +1,5 @@
+# Makefile defines for building the MiniGUI library with GNU Make
+
+include Makefile.am
+include ../../rules.make
+

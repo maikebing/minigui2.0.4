@@ -1,0 +1,14 @@
+include Makefile.am
+
+SRC_FILES = vgarom_8x8.c sansserif_11x13.c courier_8x13.c symb12.c \
+    system_14x16.c terminal_8x12.c fixedsys_8x15.c \
+    6x12-iso8859-1.c 8x16-iso8859-1.c 12x24-iso8859-1.c \
+    song-12-gb2312.c song-16-gb2312.c song-24-gb2312.c \
+    gothic_6x12rk.c gothic_12_jiskan.c \
+    gothic_8x16rk.c gothic_16_jiskan.c \
+    gothic_7x14rk.c gothic_14_jiskan.c \
+    qpf-helvetica-10.c  qpf-micro-4.c  qpf-times-10.c
+#qpf-song-16.c
+
+include ../../../rules.make
+

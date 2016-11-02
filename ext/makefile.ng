@@ -1,0 +1,55 @@
+# have sub directories
+TOPLOOP = 1
+TOP_DIR=..
+
+
+COMM_LDADD=						\
+    control/libcontrol.$(LIBA)   \
+    mywins/libmywins.$(LIBA)     \
+    skin/libskin.$(LIBA)
+
+SUB_LDADD=$(COMM_LDADD)
+
+SUB_LDDIR=$(dir $(SUB_LDADD))
+SUB_DIRS=$(SUB_LDDIR) include
+SUB_LDOBJS=$(addsuffix *.$(OBJ), $(SUB_LDDIR))
+
+
+################################################################
+
+include $(TOP_DIR)/build/Defs-mgext.win32
+include $(TOP_DIR)/build/Defs.win32
+include $(TOP_DIR)/rules.make
+
+################################################################
+# specific targets and commands
+
+ifeq (1, $(DLL))
+all :: $(MGEXTLIB).dll libmgext.$(LIBA)
+else
+all :: libmgext.$(LIBA)
+endif
+
+$(MGEXTLIB).dll : $(SUB_LDADD)
+	$(CC) -LD $(CRUNTIME) -Fe$(MGEXTLIB).dll $(SUB_LDOBJS) ../src/$(MINIGUILIB).lib $(PTHREAD_LIBS) kernel32.lib user32.lib $(LDFLAGS)
+
+libmgext.$(LIBA) : $(SUB_LDADD)
+	$(AR) $(ARFLAGS) $(ARFLAGS_OUT)$@ $(SUB_LDOBJS)
+	$(RANLIB) $@
+
+$(SUB_LDADD) : 
+	$(MAKE) -C $(dir $@) -f makefile.ng
+
+cleanall : clean
+
+install::
+	$(CP) libmgext.$(LIBA) $(libdir)/libmgext.$(LIBA)
+
+installdirs :: force
+	@-mkdir $(prefix)
+	@-mkdir $(exec_prefix)
+	@-mkdir $(libdir)
+
+uninstall :: force
+	$(RM) $(libdir)/$(MGEXTLIB).$(LIBA)
+

@@ -348,7 +348,7 @@
 /* #undef _FLAT_WINDOW_STYLE */
 
 /* Define if support TrueType font based on FreeType2 */
-/* #undef _FT2_SUPPORT */
+#define _FT2_SUPPORT 1
 
 /* Define if include IAL engine for FXRM9200 */
 /* #undef _FXRM9200_IAL */
@@ -712,7 +712,7 @@
 /* #undef _TTF_CACHE_SUPPORT */
 
 /* Define if support TrueType font */
-#define _TTF_SUPPORT 1
+/* #undef _TTF_SUPPORT */
 
 /* Define if support Adobe Type1 fonts */
 /* #undef _TYPE1_SUPPORT */

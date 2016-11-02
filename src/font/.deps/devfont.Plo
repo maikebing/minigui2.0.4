@@ -37,14 +37,23 @@ devfont.lo: devfont.c /usr/include/stdio.h /usr/include/features.h \
  /usr/include/i386-linux-gnu/bits/semaphore.h ../../include/minigui.h \
  ../../include/gdi.h ../../include/endianrw.h ../include/sysfont.h \
  charset.h ../include/devfont.h ../include/fontname.h rawbitmap.h \
- varbitmap.h freetype.h /usr/local/include/freetype/freetype.h \
- /usr/local/include/freetype/fterrid.h \
- /usr/local/include/freetype/ftnameid.h \
- /usr/local/include/freetype/ftxkern.h \
- /usr/local/include/freetype/freetype.h \
- /usr/local/include/freetype/ftnameid.h \
- /usr/local/include/freetype/ftxcmap.h \
- /usr/local/include/freetype/ftxwidth.h qpf.h
+ varbitmap.h freetype2.h /usr/include/ft2build.h \
+ /usr/include/freetype2/freetype/config/ftheader.h \
+ /usr/include/freetype2/freetype/freetype.h \
+ /usr/include/freetype2/freetype/config/ftconfig.h \
+ /usr/include/freetype2/freetype/config/ftoption.h \
+ /usr/include/freetype2/freetype/config/ftstdlib.h /usr/include/setjmp.h \
+ /usr/include/freetype2/freetype/fterrors.h \
+ /usr/include/freetype2/freetype/ftmoderr.h \
+ /usr/include/freetype2/freetype/fterrdef.h \
+ /usr/include/freetype2/freetype/fttypes.h \
+ /usr/include/freetype2/freetype/ftsystem.h \
+ /usr/include/freetype2/freetype/ftimage.h \
+ /usr/include/freetype2/freetype/ftglyph.h \
+ /usr/include/freetype2/freetype/ttnameid.h \
+ /usr/include/freetype2/freetype/ftsizes.h \
+ /usr/include/freetype2/freetype/ftlcdfil.h \
+ /usr/include/freetype2/freetype/ftcache.h qpf.h
 
 /usr/include/stdio.h:
 
@@ -166,22 +175,42 @@ rawbitmap.h:
 
 varbitmap.h:
 
-freetype.h:
+freetype2.h:
 
-/usr/local/include/freetype/freetype.h:
+/usr/include/ft2build.h:
 
-/usr/local/include/freetype/fterrid.h:
+/usr/include/freetype2/freetype/config/ftheader.h:
 
-/usr/local/include/freetype/ftnameid.h:
+/usr/include/freetype2/freetype/freetype.h:
 
-/usr/local/include/freetype/ftxkern.h:
+/usr/include/freetype2/freetype/config/ftconfig.h:
 
-/usr/local/include/freetype/freetype.h:
+/usr/include/freetype2/freetype/config/ftoption.h:
 
-/usr/local/include/freetype/ftnameid.h:
+/usr/include/freetype2/freetype/config/ftstdlib.h:
 
-/usr/local/include/freetype/ftxcmap.h:
+/usr/include/setjmp.h:
 
-/usr/local/include/freetype/ftxwidth.h:
+/usr/include/freetype2/freetype/fterrors.h:
+
+/usr/include/freetype2/freetype/ftmoderr.h:
+
+/usr/include/freetype2/freetype/fterrdef.h:
+
+/usr/include/freetype2/freetype/fttypes.h:
+
+/usr/include/freetype2/freetype/ftsystem.h:
+
+/usr/include/freetype2/freetype/ftimage.h:
+
+/usr/include/freetype2/freetype/ftglyph.h:
+
+/usr/include/freetype2/freetype/ttnameid.h:
+
+/usr/include/freetype2/freetype/ftsizes.h:
+
+/usr/include/freetype2/freetype/ftlcdfil.h:
+
+/usr/include/freetype2/freetype/ftcache.h:
 
 qpf.h:

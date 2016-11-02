@@ -45,15 +45,7 @@ freetype.lo: freetype.c /usr/include/stdio.h /usr/include/features.h \
  /usr/include/i386-linux-gnu/bits/semaphore.h ../../include/minigui.h \
  ../../include/gdi.h ../../include/endianrw.h ../include/devfont.h \
  charset.h ../include/fontname.h ../include/misc.h \
- /usr/include/i386-linux-gnu/sys/time.h freetype.h \
- /usr/local/include/freetype/freetype.h \
- /usr/local/include/freetype/fterrid.h \
- /usr/local/include/freetype/ftnameid.h \
- /usr/local/include/freetype/ftxkern.h \
- /usr/local/include/freetype/freetype.h \
- /usr/local/include/freetype/ftnameid.h \
- /usr/local/include/freetype/ftxcmap.h \
- /usr/local/include/freetype/ftxwidth.h
+ /usr/include/i386-linux-gnu/sys/time.h
 
 /usr/include/stdio.h:
 
@@ -192,21 +184,3 @@ charset.h:
 ../include/misc.h:
 
 /usr/include/i386-linux-gnu/sys/time.h:
-
-freetype.h:
-
-/usr/local/include/freetype/freetype.h:
-
-/usr/local/include/freetype/fterrid.h:
-
-/usr/local/include/freetype/ftnameid.h:
-
-/usr/local/include/freetype/ftxkern.h:
-
-/usr/local/include/freetype/freetype.h:
-
-/usr/local/include/freetype/ftnameid.h:
-
-/usr/local/include/freetype/ftxcmap.h:
-
-/usr/local/include/freetype/ftxwidth.h:

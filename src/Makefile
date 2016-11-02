@@ -162,17 +162,17 @@ am__relativize = \
     dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
   done; \
   reldir="$$dir2"
-ACLOCAL = ${SHELL} /root/libminigui-2.0.4-linux/missing --run aclocal-1.11
+ACLOCAL = ${SHELL} /var/lib/jenkins/workspace/libminigui/missing --run aclocal-1.11
 ALLOCA = 
 AMTAR = $${TAR-tar}
 AR = ar
-AUTOCONF = ${SHELL} /root/libminigui-2.0.4-linux/missing --run autoconf
-AUTOHEADER = ${SHELL} /root/libminigui-2.0.4-linux/missing --run autoheader
-AUTOMAKE = ${SHELL} /root/libminigui-2.0.4-linux/missing --run automake-1.11
-AWK = mawk
+AUTOCONF = ${SHELL} /var/lib/jenkins/workspace/libminigui/missing --run autoconf
+AUTOHEADER = ${SHELL} /var/lib/jenkins/workspace/libminigui/missing --run autoheader
+AUTOMAKE = ${SHELL} /var/lib/jenkins/workspace/libminigui/missing --run automake-1.11
+AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2 -I/usr/include/freetype1 -D__MINIGUI_LIB__ -D_REENTRANT -Wall -Wstrict-prototypes -pipe
+CFLAGS = -g -O2 -I/usr/include/freetype2 -D__MINIGUI_LIB__ -D_REENTRANT -Wall -Wstrict-prototypes -pipe
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -205,7 +205,7 @@ LT_AGE = 0
 LT_CURRENT = 4
 LT_RELEASE = 2.0
 LT_REVISION = 0
-MAKEINFO = ${SHELL} /root/libminigui-2.0.4-linux/missing --run makeinfo
+MAKEINFO = ${SHELL} /var/lib/jenkins/workspace/libminigui/missing --run makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 MiniGUI_BINARY_AGE = 0
@@ -233,14 +233,14 @@ SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = strip
-SYSTEM_LIBS =  -lttf -ljpeg -lm
+SYSTEM_LIBS =  -L/usr/lib/i386-linux-gnu -lfreetype -lz -ljpeg -lm
 VERSION = 2.0.4
 VIDEO_DRIVERS =  dummy/libvideo_null.la fbcon/libvideo_fbcon.la qvfb/libvideo_qvfb.la
 VIDEO_SUBDIRS =  dummy fbcon qvfb
-abs_builddir = /root/libminigui-2.0.4-linux/src
-abs_srcdir = /root/libminigui-2.0.4-linux/src
-abs_top_builddir = /root/libminigui-2.0.4-linux
-abs_top_srcdir = /root/libminigui-2.0.4-linux
+abs_builddir = /var/lib/jenkins/workspace/libminigui/src
+abs_srcdir = /var/lib/jenkins/workspace/libminigui/src
+abs_top_builddir = /var/lib/jenkins/workspace/libminigui
+abs_top_srcdir = /var/lib/jenkins/workspace/libminigui
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -269,7 +269,7 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /root/libminigui-2.0.4-linux/install-sh
+install_sh = ${SHELL} /var/lib/jenkins/workspace/libminigui/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -326,7 +326,7 @@ libminigui_la_LIBADD = \
     $(NEWGAL_LADD)
 
 
-# -lttf -ljpeg -lm
+# -L/usr/lib/i386-linux-gnu -lfreetype -lz -ljpeg -lm
 libminigui_la_SOURCES = template.c template.h
 libminigui_la_LDFLAGS = -release $(LT_RELEASE) -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 CLEANFILES = *.a

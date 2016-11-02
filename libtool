@@ -2,7 +2,7 @@
 
 # libtool - Provide generalized library-building support services.
 # Generated automatically by config.status (libminigui) 2.0.4
-# Libtool was configured on host debian7:
+# Libtool was configured on host iZ2zeaprux2w6va10pfc7bZ:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 #
 #   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
@@ -164,7 +164,7 @@ lock_old_archive_extraction=no
 LTCC="gcc"
 
 # LTCC compiler flags.
-LTCFLAGS="-g -O2 -I/usr/include/freetype1 -D__MINIGUI_LIB__ -D_REENTRANT -Wall -Wstrict-prototypes -pipe"
+LTCFLAGS="-g -O2 -I/usr/include/freetype2 -D__MINIGUI_LIB__ -D_REENTRANT -Wall -Wstrict-prototypes -pipe"
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p' | sed '/ __gnu_lto/d'"

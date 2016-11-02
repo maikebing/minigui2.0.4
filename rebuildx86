@@ -1,0 +1,5 @@
+chmod 777 autogen.sh 
+./autogen.sh 
+./configure --prefix=/usr --enable-ttfsupport --enable-ft2support  --disable-pngsupport 
+make clean  
+make 

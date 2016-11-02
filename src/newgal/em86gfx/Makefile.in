@@ -236,9 +236,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/newgal/em86gfx/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/newgal/em86gfx/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/newgal/em86gfx/Makefile
+	  $(AUTOMAKE) --foreign src/newgal/em86gfx/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
